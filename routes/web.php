@@ -21,8 +21,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
 
     // Gestione Clienti
-    Route::resource('clienti', ClienteController::class);
     Route::get('/clienti/search', [ClienteController::class, 'search'])->name('clienti.search');
+    Route::resource('clienti', ClienteController::class);
 
     // Gestione DDT
     Route::resource('ddts', DDTController::class);

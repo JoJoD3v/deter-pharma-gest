@@ -296,9 +296,9 @@
             <div class="header-info">
                 <div class="company-name">DeterPharma</div>
                 <div class="company-details">
-                    <strong>Sede Operativa:</strong> Via Rossi 1234, 00012 Roma<br>
-                    <strong>Tel:</strong> 02 2379239<br>
-                    <strong>Email:</strong> info@deterpharma.it
+                    <strong>Sede Operativa:</strong> Via Carlo Poma nr. 4 00198 - ROMA<br>
+                    <strong>Tel:</strong> + 39 06 21119547 | +39 393 8788378<br>
+                    <strong>Email:</strong> deterpharma@gmail.com
                 </div>
             </div>
         </div>
