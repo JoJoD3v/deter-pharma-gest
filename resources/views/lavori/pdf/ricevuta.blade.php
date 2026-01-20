@@ -299,6 +299,7 @@
                     <strong>Sede Operativa:</strong> Via Carlo Poma nr. 4 00198 - ROMA<br>
                     <strong>Tel:</strong> + 39 06 21119547 | +39 393 8788378<br>
                     <strong>Email:</strong> deterpharma@gmail.com
+                    <strong>P.IVA:</strong> 12766761006
                 </div>
             </div>
         </div>
