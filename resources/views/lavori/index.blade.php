@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h2">Gestione Lavori</h1>
+        <h1 class="h2">Gestione Rapportini</h1>
         <a href="{{ route('lavori.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-circle"></i> Nuovo Lavoro
         </a>
@@ -16,6 +16,68 @@
         </div>
     @endif
 
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="bi bi-funnel"></i> Filtri di Ricerca
+        </div>
+        <div class="card-body">
+            <form method="GET" action="{{ route('lavori.index') }}">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <label for="numero_ordine" class="form-label">N° Ordine (ID)</label>
+                        <input type="number" name="numero_ordine" id="numero_ordine" class="form-control" 
+                               value="{{ request('numero_ordine') }}" placeholder="es. 1">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="cliente" class="form-label">Cliente</label>
+                        <input type="text" name="cliente" id="cliente" class="form-control" 
+                               value="{{ request('cliente') }}" placeholder="Nome o ragione sociale">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="data_da" class="form-label">Data Da</label>
+                        <input type="date" name="data_da" id="data_da" class="form-control" 
+                               value="{{ request('data_da') }}">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="data_a" class="form-label">Data A</label>
+                        <input type="date" name="data_a" id="data_a" class="form-control" 
+                               value="{{ request('data_a') }}">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="tipo_ordine" class="form-label">Tipo Ordine</label>
+                        <select name="tipo_ordine" id="tipo_ordine" class="form-select">
+                            <option value="">Tutti</option>
+                            <option value="Contratto" {{ request('tipo_ordine') == 'Contratto' ? 'selected' : '' }}>Contratto</option>
+                            <option value="Email" {{ request('tipo_ordine') == 'Email' ? 'selected' : '' }}>Email</option>
+                            <option value="Telefonico" {{ request('tipo_ordine') == 'Telefonico' ? 'selected' : '' }}>Telefonico</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="lavoro_extra" class="form-label">Extra</label>
+                        <select name="lavoro_extra" id="lavoro_extra" class="form-select">
+                            <option value="">Tutti</option>
+                            <option value="1" {{ request('lavoro_extra') == '1' ? 'selected' : '' }}>Sì</option>
+                            <option value="0" {{ request('lavoro_extra') == '0' ? 'selected' : '' }}>No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i> Cerca
+                        </button>
+                        <a href="{{ route('lavori.index') }}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Reimposta
+                        </a>
+                        @if(request()->hasAny(['numero_ordine', 'cliente', 'data_da', 'data_a', 'tipo_ordine', 'lavoro_extra']))
+                            <span class="badge bg-success ms-2">Filtri attivi</span>
+                        @endif
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header">
             <i class="bi bi-list-ul"></i> Lista Lavori Svolti
@@ -26,7 +88,7 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>N° Ordine</th>
                                 <th>Cliente</th>
                                 <th>Lavoro Svolto</th>
                                 <th>Data Lavoro</th>
@@ -37,7 +99,7 @@
                         <tbody>
                             @foreach($lavori as $lavoro)
                                 <tr>
-                                    <td>{{ $lavoro->id }}</td>
+                                    <td><strong>{{ $lavoro->numero_ordine }}</strong></td>
                                     <td>
                                         <strong>{{ $lavoro->nome_completo }}</strong>
                                         @if($lavoro->cliente_id)

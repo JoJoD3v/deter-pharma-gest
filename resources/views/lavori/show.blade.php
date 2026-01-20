@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h2">Dettaglio Lavoro #{{ $lavoro->id }}</h1>
+        <h1 class="h2">Dettaglio Lavoro N° {{ $lavoro->numero_ordine }}</h1>
         <div class="btn-group" role="group">
             <a href="{{ route('lavori.pdf.ricevuta', $lavoro) }}" class="btn btn-danger" target="_blank">
                 <i class="bi bi-file-pdf"></i> Scarica Ricevuta PDF
@@ -74,10 +74,38 @@
                 <div class="card-body">
                     <table class="table table-borderless">
                         <tr>
-                            <th width="40%">Data Lavoro:</th>
+                            <th width="40%">Numero Ordine:</th>
+                            <td><strong class="text-primary">{{ $lavoro->numero_ordine }}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Data Lavoro:</th>
                             <td>
                                 <i class="bi bi-calendar"></i> 
                                 <strong>{{ $lavoro->data_lavoro->format('d/m/Y') }}</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Numero Trattamento:</th>
+                            <td>{{ $lavoro->numero_trattamento ?: 'Non specificato' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tipo Ordine:</th>
+                            <td>
+                                @if($lavoro->tipo_ordine)
+                                    <span class="badge bg-info">{{ $lavoro->tipo_ordine }}</span>
+                                @else
+                                    Non specificato
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Lavoro Extra:</th>
+                            <td>
+                                @if($lavoro->lavoro_extra)
+                                    <span class="badge bg-warning text-dark"><i class="bi bi-star-fill"></i> Sì</span>
+                                @else
+                                    <span class="badge bg-secondary">No</span>
+                                @endif
                             </td>
                         </tr>
                         <tr>

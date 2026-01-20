@@ -9,6 +9,68 @@
         </a>
     </div>
 
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="bi bi-funnel"></i> Filtri di Ricerca
+        </div>
+        <div class="card-body">
+            <form method="GET" action="{{ route('ddts.index') }}">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <label for="numero_ddt" class="form-label">Numero DDT</label>
+                        <input type="text" name="numero_ddt" id="numero_ddt" class="form-control" 
+                               value="{{ request('numero_ddt') }}" placeholder="es. DDT-001">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="cliente" class="form-label">Cliente</label>
+                        <input type="text" name="cliente" id="cliente" class="form-control" 
+                               value="{{ request('cliente') }}" placeholder="Nome o codice cliente">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="causale" class="form-label">Causale Trasporto</label>
+                        <input type="text" name="causale" id="causale" class="form-control" 
+                               value="{{ request('causale') }}" placeholder="Causale">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="trasporto_a_cura" class="form-label">Trasporto a cura</label>
+                        <select name="trasporto_a_cura" id="trasporto_a_cura" class="form-select">
+                            <option value="">Tutti</option>
+                            <option value="mittente" {{ request('trasporto_a_cura') == 'mittente' ? 'selected' : '' }}>Mittente</option>
+                            <option value="vettore" {{ request('trasporto_a_cura') == 'vettore' ? 'selected' : '' }}>Vettore</option>
+                            <option value="destinatario" {{ request('trasporto_a_cura') == 'destinatario' ? 'selected' : '' }}>Destinatario</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="data_da" class="form-label">Data Da</label>
+                        <input type="date" name="data_da" id="data_da" class="form-control" 
+                               value="{{ request('data_da') }}">
+                    </div>
+                </div>
+                <div class="row g-3 mt-2">
+                    <div class="col-md-2">
+                        <label for="data_a" class="form-label">Data A</label>
+                        <input type="date" name="data_a" id="data_a" class="form-control" 
+                               value="{{ request('data_a') }}">
+                    </div>
+                    <div class="col-md-10">
+                        <label class="form-label">&nbsp;</label>
+                        <div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-search"></i> Cerca
+                            </button>
+                            <a href="{{ route('ddts.index') }}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Reimposta
+                            </a>
+                            @if(request()->hasAny(['numero_ddt', 'cliente', 'causale', 'trasporto_a_cura', 'data_da', 'data_a']))
+                                <span class="badge bg-success ms-2">Filtri attivi</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-body">
             @if($ddts->count() > 0)

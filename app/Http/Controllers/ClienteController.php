@@ -12,9 +12,45 @@ class ClienteController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $clienti = Cliente::latest()->paginate(15);
+        $query = Cliente::query();
+
+        // Filtro per tipo cliente
+        if ($request->filled('tipo_cliente')) {
+            $query->where('tipo_cliente', $request->tipo_cliente);
+        }
+
+        // Filtro per nome/ragione sociale
+        if ($request->filled('nome')) {
+            $query->where(function($q) use ($request) {
+                $q->where('nome', 'like', '%' . $request->nome . '%')
+                  ->orWhere('cognome', 'like', '%' . $request->nome . '%')
+                  ->orWhere('ragione_sociale', 'like', '%' . $request->nome . '%');
+            });
+        }
+
+        // Filtro per codice fiscale
+        if ($request->filled('codice_fiscale')) {
+            $query->where('codice_fiscale', 'like', '%' . $request->codice_fiscale . '%');
+        }
+
+        // Filtro per partita IVA
+        if ($request->filled('partita_iva')) {
+            $query->where('partita_iva', 'like', '%' . $request->partita_iva . '%');
+        }
+
+        // Filtro per telefono
+        if ($request->filled('telefono')) {
+            $query->where('telefono', 'like', '%' . $request->telefono . '%');
+        }
+
+        // Filtro per email
+        if ($request->filled('email')) {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
+
+        $clienti = $query->latest()->paginate(15)->withQueryString();
         return view('clienti.index', compact('clienti'));
     }
 

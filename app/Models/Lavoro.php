@@ -16,10 +16,14 @@ class Lavoro extends Model
         'indirizzo_cliente',
         'lavoro_svolto',
         'data_lavoro',
+        'numero_trattamento',
+        'lavoro_extra',
+        'tipo_ordine',
     ];
 
     protected $casts = [
         'data_lavoro' => 'date',
+        'lavoro_extra' => 'boolean',
     ];
 
     /**
@@ -55,5 +59,14 @@ class Lavoro extends Model
         }
 
         return $this->indirizzo_cliente ?? '';
+    }
+
+    /**
+     * Ottiene il numero ordine formattato (es: 00001/2026)
+     */
+    public function getNumeroOrdineAttribute(): string
+    {
+        $anno = $this->data_lavoro ? $this->data_lavoro->format('Y') : date('Y');
+        return str_pad($this->id, 5, '0', STR_PAD_LEFT) . '/' . $anno;
     }
 }

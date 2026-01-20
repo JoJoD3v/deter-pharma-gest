@@ -13,9 +13,31 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::latest()->paginate(15);
+        $query = User::query();
+
+        // Filtro per nome
+        if ($request->filled('nome')) {
+            $query->where('name', 'like', '%' . $request->nome . '%');
+        }
+
+        // Filtro per cognome
+        if ($request->filled('cognome')) {
+            $query->where('cognome', 'like', '%' . $request->cognome . '%');
+        }
+
+        // Filtro per email
+        if ($request->filled('email')) {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
+
+        // Filtro per ruolo
+        if ($request->filled('ruolo')) {
+            $query->where('ruolo', $request->ruolo);
+        }
+
+        $users = $query->latest()->paginate(15)->withQueryString();
         return view('users.index', compact('users'));
     }
 

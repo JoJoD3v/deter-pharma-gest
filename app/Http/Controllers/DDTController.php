@@ -16,9 +16,47 @@ class DDTController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $ddts = DDT::with('cliente')->latest()->paginate(15);
+        $query = DDT::with('cliente');
+
+        // Filtro per numero DDT
+        if ($request->filled('numero_ddt')) {
+            $query->where('numero_ddt', 'like', '%' . $request->numero_ddt . '%');
+        }
+
+        // Filtro per cliente
+        if ($request->filled('cliente')) {
+            $query->where(function($q) use ($request) {
+                $q->where('codice_cliente', 'like', '%' . $request->cliente . '%')
+                  ->orWhereHas('cliente', function($subQ) use ($request) {
+                      $subQ->where('nome', 'like', '%' . $request->cliente . '%')
+                           ->orWhere('cognome', 'like', '%' . $request->cliente . '%')
+                           ->orWhere('ragione_sociale', 'like', '%' . $request->cliente . '%');
+                  });
+            });
+        }
+
+        // Filtro per causale trasporto
+        if ($request->filled('causale')) {
+            $query->where('causale_trasporto', 'like', '%' . $request->causale . '%');
+        }
+
+        // Filtro per trasporto a cura
+        if ($request->filled('trasporto_a_cura')) {
+            $query->where('trasporto_a_cura', $request->trasporto_a_cura);
+        }
+
+        // Filtro per data trasporto
+        if ($request->filled('data_da')) {
+            $query->whereDate('data_ora_trasporto', '>=', $request->data_da);
+        }
+
+        if ($request->filled('data_a')) {
+            $query->whereDate('data_ora_trasporto', '<=', $request->data_a);
+        }
+
+        $ddts = $query->latest()->paginate(15)->withQueryString();
         return view('ddts.index', compact('ddts'));
     }
 

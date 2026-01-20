@@ -116,6 +116,43 @@
                     </div>
                 </div>
 
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="numero_trattamento" class="form-label">Numero Trattamento</label>
+                        <input type="number" name="numero_trattamento" id="numero_trattamento" 
+                               class="form-control @error('numero_trattamento') is-invalid @enderror" 
+                               value="{{ old('numero_trattamento') }}" min="1" max="99" placeholder="1-12">
+                        @error('numero_trattamento')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <small class="text-muted">Numero del trattamento (1-12)</small>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="tipo_ordine" class="form-label">Tipo Ordine</label>
+                        <select name="tipo_ordine" id="tipo_ordine" class="form-select @error('tipo_ordine') is-invalid @enderror">
+                            <option value="">-- Seleziona Tipo --</option>
+                            <option value="Contratto" {{ old('tipo_ordine') == 'Contratto' ? 'selected' : '' }}>Contratto</option>
+                            <option value="Email" {{ old('tipo_ordine') == 'Email' ? 'selected' : '' }}>Email</option>
+                            <option value="Telefonico" {{ old('tipo_ordine') == 'Telefonico' ? 'selected' : '' }}>Telefonico</option>
+                        </select>
+                        @error('tipo_ordine')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label d-block">Opzioni</label>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" name="lavoro_extra" id="lavoro_extra" 
+                                   value="1" {{ old('lavoro_extra') ? 'checked' : '' }}>
+                            <label class="form-check-label" for="lavoro_extra">
+                                <strong>Lavoro Extra</strong>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row mt-4">
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary">

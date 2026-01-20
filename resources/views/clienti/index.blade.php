@@ -9,6 +9,64 @@
         </a>
     </div>
 
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="bi bi-funnel"></i> Filtri di Ricerca
+        </div>
+        <div class="card-body">
+            <form method="GET" action="{{ route('clienti.index') }}">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <label for="tipo_cliente" class="form-label">Tipo Cliente</label>
+                        <select name="tipo_cliente" id="tipo_cliente" class="form-select">
+                            <option value="">Tutti</option>
+                            <option value="fisica" {{ request('tipo_cliente') == 'fisica' ? 'selected' : '' }}>Persona Fisica</option>
+                            <option value="giuridica" {{ request('tipo_cliente') == 'giuridica' ? 'selected' : '' }}>Persona Giuridica</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="nome" class="form-label">Nome/Ragione Sociale</label>
+                        <input type="text" name="nome" id="nome" class="form-control" 
+                               value="{{ request('nome') }}" placeholder="Cerca per nome">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="codice_fiscale" class="form-label">Codice Fiscale</label>
+                        <input type="text" name="codice_fiscale" id="codice_fiscale" class="form-control" 
+                               value="{{ request('codice_fiscale') }}" placeholder="CF">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="partita_iva" class="form-label">Partita IVA</label>
+                        <input type="text" name="partita_iva" id="partita_iva" class="form-control" 
+                               value="{{ request('partita_iva') }}" placeholder="P.IVA">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="telefono" class="form-label">Telefono</label>
+                        <input type="text" name="telefono" id="telefono" class="form-control" 
+                               value="{{ request('telefono') }}" placeholder="Telefono">
+                    </div>
+                    <div class="col-md-1">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" name="email" id="email" class="form-control" 
+                               value="{{ request('email') }}" placeholder="Email">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i> Cerca
+                        </button>
+                        <a href="{{ route('clienti.index') }}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Reimposta
+                        </a>
+                        @if(request()->hasAny(['tipo_cliente', 'nome', 'codice_fiscale', 'partita_iva', 'telefono', 'email']))
+                            <span class="badge bg-success ms-2">Filtri attivi</span>
+                        @endif
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-body">
             @if($clienti->count() > 0)

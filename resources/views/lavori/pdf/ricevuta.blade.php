@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ricevuta Lavoro - {{ $lavoro->id }}</title>
+    <title>Ricevuta Lavoro - {{ $lavoro->numero_ordine }}</title>
     <style>
+        @page {
+            margin: 15mm;
+            size: A4 portrait;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,212 +17,377 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            color: #000;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #2c3e50;
+            background: #ffffff;
+            font-size: 9pt;
+            line-height: 1.4;
         }
 
         .container {
             width: 100%;
-            height: 100%;
-            padding: 20px;
+            max-width: 180mm;
+            margin: 0 auto;
         }
 
-        .main-box {
-            border: 4px solid #216581;
-            width: 100%;
-            height: 450px;
+        /* ========== HEADER ========== */
+        .header {
             display: table;
-        }
-
-        .left-section {
-            width: 30%;
-            border-right: 4px solid #216581;
-            padding: 30px 20px;
-            vertical-align: top;
-            display: table-cell;
-        }
-
-        .right-section {
-            width: 70%;
-            padding: 30px;
-            vertical-align: top;
-            display: table-cell;
-        }
-
-        .logo-box {
             width: 100%;
-            height: 180px;
-            border: 2px solid #216581;
-            background-color: #F8FBFC;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 30px;
+            margin-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+
+        .header-logo {
+            display: table-cell;
+            width: 35%;
+            vertical-align: middle;
+            text-align: left;
+        }
+
+        .header-logo img {
+            max-width: 120px;
+            height: auto;
+        }
+
+        .header-info {
+            display: table-cell;
+            width: 65%;
+            vertical-align: middle;
+            text-align: right;
+            padding-left: 15px;
+        }
+
+        .company-name {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 3px;
+            letter-spacing: 0.3px;
+        }
+
+        .company-details {
+            font-size: 8pt;
+            color: #7f8c8d;
+            line-height: 1.3;
+        }
+
+        .company-details strong {
+            color: #34495e;
+        }
+
+        /* ========== TITOLO DOCUMENTO ========== */
+        .document-title {
+            text-align: center;
+            margin: 8px 0 12px 0;
+            padding: 10px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .document-title h1 {
+            font-size: 18pt;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .document-number {
+            font-size: 11pt;
+            color: #000000;
+            font-weight: 600;
+        }
+
+        /* ========== SEZIONI INFORMAZIONI ========== */
+        .info-section {
+            margin-bottom: 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #ecf0f1 0%, #d5dbdb 100%);
+            padding: 6px 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .section-header h2 {
+            font-size: 10pt;
+            font-weight: bold;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin: 0;
+        }
+
+
+
+        .section-content {
+            padding: 10px;
+        }
+
+        /* ========== GRIGLIA INFORMAZIONI ========== */
+        .info-grid {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .info-row {
+            display: table-row;
+        }
+
+        .info-label {
+            display: table-cell;
+            width: 35%;
+            padding: 5px 8px;
+            font-weight: 600;
+            color: #34495e;
+            font-size: 9pt;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .info-value {
+            display: table-cell;
+            width: 65%;
+            padding: 5px 8px;
+            color: #2c3e50;
+            font-size: 9pt;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .info-row:last-child .info-label,
+        .info-row:last-child .info-value {
+            border-bottom: none;
+        }
+
+        /* ========== CLIENTE ========== */
+        .cliente-name {
+            font-size: 11pt;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 6px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-left: 3px solid #3498db;
+            border-radius: 3px;
+        }
+
+        .cliente-address {
+            font-size: 9pt;
+            color: #7f8c8d;
+            padding-left: 8px;
+        }
+
+        /* ========== DESCRIZIONE LAVORO ========== */
+        .work-description {
+            font-size: 9pt;
+            line-height: 1.5;
+            color: #2c3e50;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 3px solid #3498db;
+            border-radius: 3px;
+            min-height: 60px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* ========== FIRME ========== */
+        .signatures {
+            margin-top: 25px;
+            display: table;
+            width: 100%;
+            page-break-inside: avoid;
+        }
+
+        .signature-block {
+            display: table-cell;
+            width: 50%;
+            padding: 0 10px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .signature-date {
+            font-size: 9pt;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 35px;
+        }
+
+        .signature-line {
+            border-bottom: 1.5px solid #2c3e50;
+            width: 80%;
+            margin: 0 auto 6px auto;
+        }
+
+        .signature-label {
+            font-size: 8pt;
+            color: #7f8c8d;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ecf0f1;
+            text-align: center;
+            font-size: 7pt;
+            color: #95a5a6;
+            page-break-inside: avoid;
+        }
+
+        .footer-line {
+            margin-bottom: 3px;
+        }
+
+        /* ========== UTILITY ========== */
+        .text-center {
             text-align: center;
         }
 
-        .logo-placeholder {
-            font-size: 32px;
+        .text-bold {
             font-weight: bold;
-            color: #216581;
-            letter-spacing: 2px;
         }
 
-        .sede-operativa {
-            margin-top: 30px;
-        }
-
-        .sede-operativa h3 {
-            font-size: 16px;
-            font-weight: bold;
-            color: #216581;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #2FA4C4;
-            padding-bottom: 5px;
-        }
-
-        .sede-operativa p {
-            font-size: 13px;
-            line-height: 1.8;
-            margin: 5px 0;
-            color: #333;
-        }
-
-        .destinatario-box {
-            border: 3px solid #216581;
-            padding: 20px;
-            margin-bottom: 25px;
-            background-color: #F8FBFC;
-        }
-
-        .destinatario-box h3 {
-            font-size: 14px;
-            font-weight: bold;
-            color: #216581;
-            margin-bottom: 8px;
-        }
-
-        .destinatario-box p {
-            font-size: 16px;
-            font-weight: bold;
-            margin: 5px 0;
-            color: #000;
-        }
-
-        .intervento-box {
-            border: 3px solid #216581;
-            padding: 20px;
-            margin-bottom: 25px;
-            min-height: 100px;
-            background-color: #FFFFFF;
-        }
-
-        .intervento-box h3 {
-            font-size: 14px;
-            font-weight: bold;
-            color: #216581;
+        .mb-10 {
             margin-bottom: 10px;
         }
 
-        .intervento-box p {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #000;
+        .mt-20 {
+            margin-top: 20px;
         }
 
-        .intervento-box .esempio {
-            font-size: 12px;
-            color: #666;
-            font-style: italic;
-        }
+        /* ========== STAMPA ========== */
+        @media print {
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
 
-        .footer-section {
-            display: table;
-            width: 100%;
-        }
+            .info-section {
+                page-break-inside: avoid;
+            }
 
-        .data-firma {
-            display: table-cell;
-            width: 50%;
-            vertical-align: top;
-        }
-
-        .data-firma h4 {
-            font-size: 14px;
-            font-weight: bold;
-            color: #216581;
-            margin-bottom: 10px;
-        }
-
-        .data-firma p {
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .firma-line {
-            border-bottom: 2px solid #000;
-            width: 90%;
-            margin-top: 40px;
-        }
-
-        .firma-label {
-            font-size: 12px;
-            color: #666;
-            margin-top: 5px;
+            .signatures {
+                page-break-inside: avoid;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="main-box">
-            <!-- Sezione Sinistra -->
-            <div class="left-section">
-                <!-- Logo Placeholder -->
-                <div class="logo-box">
-                    <div class="logo-placeholder">LOGO</div>
-                </div>
-
-                <!-- Sede Operativa -->
-                <div class="sede-operativa">
-                    <h3>Sede Operativa:</h3>
-                    <p><strong>Via Rossi 1234</strong></p>
-                    <p><strong>00012 Roma</strong></p>
-                    <p style="margin-top: 15px;"><strong>Telefono</strong></p>
-                    <p><strong>02 2379239</strong></p>
+        <!-- ========== HEADER ========== -->
+        <div class="header">
+            <div class="header-logo">
+                <img src="{{ public_path('image/logo-deter.png') }}" alt="DeterPharma Logo">
+            </div>
+            <div class="header-info">
+                <div class="company-name">DeterPharma</div>
+                <div class="company-details">
+                    <strong>Sede Operativa:</strong> Via Rossi 1234, 00012 Roma<br>
+                    <strong>Tel:</strong> 02 2379239<br>
+                    <strong>Email:</strong> info@deterpharma.it
                 </div>
             </div>
+        </div>
 
-            <!-- Sezione Destra -->
-            <div class="right-section">
-                <!-- Destinatario -->
-                <div class="destinatario-box">
-                    <h3>Destinatario:</h3>
-                    <p>{{ $lavoro->nome_completo }}</p>
-                    @if($lavoro->indirizzo_completo)
-                        <p>{{ $lavoro->indirizzo_completo }}</p>
+        <!-- ========== TITOLO DOCUMENTO ========== -->
+        <div class="document-title">
+            <h1>Ricevuta Lavoro</h1>
+            <div class="document-number">N° {{ $lavoro->numero_ordine }}</div>
+        </div>
+
+        <!-- ========== INFORMAZIONI ORDINE ========== -->
+        <div class="info-section">
+            <div class="section-header">
+                <h2>Informazioni Servizio</h2>
+            </div>
+            <div class="section-content">
+                <div class="info-grid">
+                    <div class="info-row">
+                        <div class="info-label">Data Lavoro:</div>
+                        <div class="info-value"><strong>{{ $lavoro->data_lavoro->format('d/m/Y') }}</strong></div>
+                    </div>
+                    @if($lavoro->numero_trattamento)
+                    <div class="info-row">
+                        <div class="info-label">Numero Trattamento:</div>
+                        <div class="info-value">{{ $lavoro->numero_trattamento }}</div>
+                    </div>
+                    @endif
+                    @if($lavoro->tipo_ordine)
+                    <div class="info-row">
+                        <div class="info-label">Tipo Ordine:</div>
+                        <div class="info-value"><strong>{{ $lavoro->tipo_ordine }}</strong></div>
+                    </div>
+                    @endif
+                    @if($lavoro->lavoro_extra)
+                    <div class="info-row">
+                        <div class="info-label">Lavoro Extra:</div>
+                        <div class="info-value"><strong>Sì</strong></div>
+                    </div>
                     @endif
                 </div>
+            </div>
+        </div>
 
-                <!-- Intervento Svolto -->
-                <div class="intervento-box">
-                    <h3>Intervento svolto:</h3>
-                    <p>{{ $lavoro->lavoro_svolto }}</p>
-                </div>
+        <!-- ========== DESTINATARIO ========== -->
+        <div class="info-section">
+            <div class="section-header">
+                <h2>Destinatario</h2>
+            </div>
+            <div class="section-content">
+                <div class="cliente-name">{{ $lavoro->nome_completo }}</div>
+                @if($lavoro->indirizzo_completo)
+                    <div class="cliente-address">
+                        <strong>Indirizzo:</strong> {{ $lavoro->indirizzo_completo }}
+                    </div>
+                @endif
+            </div>
+        </div>
 
-                <!-- Data e Firme -->
-                <div class="footer-section">
-                    <div class="data-firma">
-                        <h4>Data: {{ $lavoro->data_lavoro->format('d/m/Y') }}</h4>
-                        <div class="firma-line"></div>
-                        <p class="firma-label">Firma Destinatario</p>
-                    </div>
-                    <div class="data-firma" style="text-align: right;">
-                        <h4 style="visibility: hidden;">Firma</h4>
-                        <div class="firma-line" style="margin-left: auto;"></div>
-                        <p class="firma-label">Firma Operatore</p>
-                    </div>
-                </div>
+        <!-- ========== INTERVENTO SVOLTO ========== -->
+        <div class="info-section">
+            <div class="section-header">
+                <h2>Intervento Svolto</h2>
+            </div>
+            <div class="section-content">
+                <div class="work-description">{{ $lavoro->lavoro_svolto }}</div>
+            </div>
+        </div>
+
+        <!-- ========== FIRME ========== -->
+        <div class="signatures">
+            <div class="signature-block">
+                <div class="signature-date">Data: {{ $lavoro->data_lavoro->format('d/m/Y') }}</div>
+                <div class="signature-line"></div>
+                <div class="signature-label">Firma Destinatario</div>
+            </div>
+            <div class="signature-block">
+                <div class="signature-date">Data: {{ $lavoro->data_lavoro->format('d/m/Y') }}</div>
+                <div class="signature-line"></div>
+                <div class="signature-label">Firma Operatore</div>
+            </div>
+        </div>
+
+        <!-- ========== FOOTER ========== -->
+        <div class="footer">
+            <div class="footer-line">
+                <strong>DeterPharma</strong> - Servizi di Sanificazione Professionale
+            </div>
+            <div class="footer-line">
+                Documento generato il {{ now()->format('d/m/Y') }} alle ore {{ now()->format('H:i') }}
             </div>
         </div>
     </div>

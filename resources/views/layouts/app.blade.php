@@ -7,6 +7,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('image/favicon.png') }}">
+
     <title>{{ config('app.name', 'DeterPharma Gest') }} - Gestionale</title>
 
     <!-- Bootstrap CSS -->
@@ -182,8 +185,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('dashboard') }}">
-                    <i class="bi bi-clipboard-data"></i> DeterPharma Gest
+                <a class="navbar-brand d-flex align-items-center" href="{{ route('dashboard') }}">
+                    <img src="{{ asset('image/logo-topbar.png') }}" alt="DeterPharma" style="height: 30px; margin-right: 10px;">
+                    DeterPharma Gest
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
@@ -256,7 +260,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('lavori.*') ? 'active' : '' }}" href="{{ route('lavori.index') }}">
-                                    <i class="bi bi-tools"></i> Gestione Lavori
+                                    <i class="bi bi-tools"></i> Gestione Rapportino
                                 </a>
                             </li>
                         </ul>
