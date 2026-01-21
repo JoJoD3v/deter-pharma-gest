@@ -63,9 +63,9 @@ class ClienteController extends Controller
     {
         $validated = $request->validate([
             'tipo_cliente' => 'required|in:fisica,giuridica',
-            'nome' => 'required|string|max:255',
+            'nome' => 'required_if:tipo_cliente,fisica|nullable|string|max:255',
             'cognome' => 'nullable|string|max:255',
-            'ragione_sociale' => 'nullable|string|max:255',
+            'ragione_sociale' => 'required_if:tipo_cliente,giuridica|nullable|string|max:255',
             'codice_fiscale' => 'nullable|string|max:16',
             'partita_iva' => 'nullable|string|max:11',
             'telefono' => 'nullable|string|max:20',
@@ -94,9 +94,9 @@ class ClienteController extends Controller
     {
         $validated = $request->validate([
             'tipo_cliente' => 'required|in:fisica,giuridica',
-            'nome' => 'required|string|max:255',
+            'nome' => 'required_if:tipo_cliente,fisica|nullable|string|max:255',
             'cognome' => 'nullable|string|max:255',
-            'ragione_sociale' => 'nullable|string|max:255',
+            'ragione_sociale' => 'required_if:tipo_cliente,giuridica|nullable|string|max:255',
             'codice_fiscale' => 'nullable|string|max:16',
             'partita_iva' => 'nullable|string|max:11',
             'telefono' => 'nullable|string|max:20',

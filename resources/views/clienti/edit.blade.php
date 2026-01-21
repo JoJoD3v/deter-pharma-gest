@@ -132,13 +132,31 @@
     document.getElementById('tipo_cliente').addEventListener('change', function() {
         const personaFisica = document.getElementById('persona-fisica-fields');
         const personaGiuridica = document.getElementById('persona-giuridica-fields');
-        
+        const nomeField = document.getElementById('nome');
+        const cognomeField = document.getElementById('cognome');
+        const ragioneSocialeField = document.getElementById('ragione_sociale');
+
         if (this.value === 'giuridica') {
+            // Mostra campi persona giuridica
             personaFisica.style.display = 'none';
             personaGiuridica.style.display = 'block';
+
+            // Rimuovi required dai campi persona fisica
+            nomeField.removeAttribute('required');
+            cognomeField.removeAttribute('required');
+
+            // Aggiungi required a ragione sociale
+            ragioneSocialeField.setAttribute('required', 'required');
         } else {
+            // Mostra campi persona fisica
             personaFisica.style.display = 'block';
             personaGiuridica.style.display = 'none';
+
+            // Aggiungi required al campo nome
+            nomeField.setAttribute('required', 'required');
+
+            // Rimuovi required da ragione sociale
+            ragioneSocialeField.removeAttribute('required');
         }
     });
 </script>
