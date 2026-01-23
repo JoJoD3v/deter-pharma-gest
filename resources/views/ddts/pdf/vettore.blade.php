@@ -16,11 +16,35 @@
             line-height: 1.4;
             color: #000;
         }
-        .header {
-            text-align: center;
+        .header-container {
+            display: table;
+            width: 100%;
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 2px solid #000;
+        }
+        .company-header {
+            display: table-cell;
+            width: 25%;
+            vertical-align: middle;
+            text-align: center;
+            padding: 10px;
+        }
+        .company-header img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 5px;
+        }
+        .company-header .company-name {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #000;
+        }
+        .header {
+            display: table-cell;
+            width: 75%;
+            vertical-align: top;
+            text-align: center;
         }
         .header h3 {
             margin: 3px 0;
@@ -35,10 +59,9 @@
             font-weight: bold;
         }
         .title {
-            text-align: center;
-            font-size: 16pt;
+            font-size: 14pt;
             font-weight: bold;
-            margin: 20px 0;
+            margin-top: 10px;
         }
         .info-box {
             width: 100%;
@@ -130,17 +153,23 @@
 <body>
     <div class="watermark">VETTORE</div>
 
-    <div class="header">
-        <h3>Spett.le</h3>
-        <h3>{{ $ddt->cliente ? $ddt->cliente->nome_completo : ($ddt->codice_cliente ?? 'N/D') }}</h3>
-        @if($ddt->cliente && $ddt->cliente->indirizzo)
-            <h3>{{ $ddt->cliente->indirizzo }}</h3>
-        @endif
-        <div class="luogo">Luogo di consegna</div>
-        <div class="idem">IDEM</div>
-    </div>
+    <div class="header-container">
+        <div class="company-header">
+            <img src="{{ public_path('image/logo-deter.png') }}" alt="DeterPharma Logo">
+            <div class="company-name">DeterPharma</div>
+        </div>
 
-    <div class="title">Documento di Trasporto</div>
+        <div class="header">
+            <h3>Spett.le</h3>
+            <h3>{{ $ddt->cliente ? $ddt->cliente->nome_completo : ($ddt->codice_cliente ?? 'N/D') }}</h3>
+            @if($ddt->cliente && $ddt->cliente->indirizzo)
+                <h3>{{ $ddt->cliente->indirizzo }}</h3>
+            @endif
+            <div class="luogo">Luogo di consegna</div>
+            <div class="idem">IDEM</div>
+            <div class="title">Documento di Trasporto</div>
+        </div>
+    </div>
 
     <table class="info-box">
         <tr>
