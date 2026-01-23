@@ -31,7 +31,7 @@
             padding: 10px;
         }
         .company-header img {
-            max-width: 80px;
+            max-width: 180px;
             height: auto;
             margin-bottom: 5px;
         }
@@ -155,8 +155,7 @@
     
     <div class="header-container">
         <div class="company-header">
-            <img src="{{ public_path('image/logo-deter.png') }}" alt="DeterPharma Logo">
-            <div class="company-name">DeterPharma</div>
+            <img src="{{ public_path('image/logo-completo.jpg') }}" alt="DeterPharma Logo">
         </div>
         
         <div class="header">

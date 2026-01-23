@@ -41,7 +41,7 @@
 
         .header-logo {
             display: table-cell;
-            width: 35%;
+            width: 50%;
             vertical-align: middle;
             text-align: left;
         }
@@ -291,7 +291,7 @@
         <!-- ========== HEADER ========== -->
         <div class="header">
             <div class="header-logo">
-                <img src="{{ public_path('image/logo-deter.png') }}" alt="DeterPharma Logo">
+             <img src="{{ public_path('image/logo-completo.jpg') }}" alt="DeterPharma Logo">
             </div>
             <div class="header-info">
                 <div class="company-name">DeterPharma</div>
