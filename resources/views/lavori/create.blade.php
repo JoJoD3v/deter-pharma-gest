@@ -20,6 +20,31 @@
                 <div class="row mb-4">
                     <div class="col-12">
                         <h5 class="border-bottom pb-2 mb-3">
+                            <i class="bi bi-hash"></i> Numero Identificativo
+                        </h5>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="numero_progressivo" class="form-label">Numero Progressivo <span class="text-danger">*</span></label>
+                        <input type="text" name="numero_progressivo" id="numero_progressivo" 
+                               class="form-control @error('numero_progressivo') is-invalid @enderror" 
+                               value="{{ old('numero_progressivo', $nextProgressivo) }}" 
+                               required
+                               maxlength="10">
+                        @error('numero_progressivo')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <small class="text-muted">Numero identificativo del lavoro (formato: 000100, 000101, etc.)</small>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h5 class="border-bottom pb-2 mb-3">
                             <i class="bi bi-person"></i> Dati Cliente
                         </h5>
                     </div>

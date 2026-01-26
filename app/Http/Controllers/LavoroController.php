@@ -16,9 +16,9 @@ class LavoroController extends Controller
     {
         $query = Lavoro::with('cliente');
 
-        // Filtro per numero ordine (ID)
-        if ($request->filled('numero_ordine')) {
-            $query->where('id', $request->numero_ordine);
+        // Filtro per numero progressivo
+        if ($request->filled('numero_progressivo')) {
+            $query->where('numero_progressivo', 'like', '%' . $request->numero_progressivo . '%');
         }
 
         // Filtro per nome cliente
@@ -63,7 +63,8 @@ class LavoroController extends Controller
     public function create()
     {
         $clienti = Cliente::orderBy('nome')->get();
-        return view('lavori.create', compact('clienti'));
+        $nextProgressivo = Lavoro::getNextProgressivo();
+        return view('lavori.create', compact('clienti', 'nextProgressivo'));
     }
 
     /**
@@ -72,6 +73,7 @@ class LavoroController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'numero_progressivo' => 'required|string|max:10|unique:lavori,numero_progressivo',
             'cliente_id' => 'nullable|exists:clientes,id',
             'nome_cliente' => 'required_without:cliente_id|string|max:255',
             'cognome_cliente' => 'nullable|string|max:255',
@@ -157,9 +159,6 @@ class LavoroController extends Controller
         $pdf = Pdf::loadView('lavori.pdf.ricevuta', compact('lavoro'));
         $pdf->setPaper('a4', 'portrait');
 
-        // Sostituisce il carattere "/" con "-" per il nome file
-        $nomeFile = str_replace('/', '-', $lavoro->numero_ordine);
-
-        return $pdf->download('Ricevuta_Lavoro_' . $nomeFile . '.pdf');
+        return $pdf->download('Ricevuta_Lavoro_' . $lavoro->numero_progressivo . '.pdf');
     }
 }

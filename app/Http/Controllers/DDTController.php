@@ -63,12 +63,14 @@ class DDTController extends Controller
     public function create()
     {
         $clienti = Cliente::all();
-        return view('ddts.create', compact('clienti'));
+        $nextProgressivo = DDT::getNextProgressivo();
+        return view('ddts.create', compact('clienti', 'nextProgressivo'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'numero_progressivo' => 'required|string|max:10|unique:d_d_t_s,numero_progressivo',
             'cliente_id' => 'nullable|exists:clientes,id',
             'codice_cliente' => 'nullable|string|max:255',
             'codice_fiscale_piva' => 'nullable|string|max:255',
@@ -176,7 +178,7 @@ class DDTController extends Controller
         $pdf = Pdf::loadView('ddts.pdf.amministratore', compact('ddt'));
         $pdf->setPaper('a4', 'portrait');
 
-        return $pdf->download('DDT_' . $ddt->numero_ddt . '_Amministratore.pdf');
+        return $pdf->download('DDT_' . $ddt->numero_progressivo . '_Amministratore.pdf');
     }
 
     public function pdfVettore(DDT $ddt)
@@ -186,6 +188,6 @@ class DDTController extends Controller
         $pdf = Pdf::loadView('ddts.pdf.vettore', compact('ddt'));
         $pdf->setPaper('a4', 'portrait');
 
-        return $pdf->download('DDT_' . $ddt->numero_ddt . '_Vettore.pdf');
+        return $pdf->download('DDT_' . $ddt->numero_progressivo . '_Vettore.pdf');
     }
 }

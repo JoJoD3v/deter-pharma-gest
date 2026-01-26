@@ -24,9 +24,9 @@
             <form method="GET" action="{{ route('lavori.index') }}">
                 <div class="row g-3">
                     <div class="col-md-2">
-                        <label for="numero_ordine" class="form-label">N° Ordine (ID)</label>
-                        <input type="number" name="numero_ordine" id="numero_ordine" class="form-control" 
-                               value="{{ request('numero_ordine') }}" placeholder="es. 1">
+                        <label for="numero_progressivo" class="form-label">Numero Progressivo</label>
+                        <input type="text" name="numero_progressivo" id="numero_progressivo" class="form-control" 
+                               value="{{ request('numero_progressivo') }}" placeholder="es. 000100">
                     </div>
                     <div class="col-md-3">
                         <label for="cliente" class="form-label">Cliente</label>
@@ -69,7 +69,7 @@
                         <a href="{{ route('lavori.index') }}" class="btn btn-secondary">
                             <i class="bi bi-x-circle"></i> Reimposta
                         </a>
-                        @if(request()->hasAny(['numero_ordine', 'cliente', 'data_da', 'data_a', 'tipo_ordine', 'lavoro_extra']))
+                        @if(request()->hasAny(['numero_progressivo', 'cliente', 'data_da', 'data_a', 'tipo_ordine', 'lavoro_extra']))
                             <span class="badge bg-success ms-2">Filtri attivi</span>
                         @endif
                     </div>
@@ -88,7 +88,7 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>N° Ordine</th>
+                                <th>Numero</th>
                                 <th>Cliente</th>
                                 <th>Lavoro Svolto</th>
                                 <th>Data Lavoro</th>
@@ -99,7 +99,7 @@
                         <tbody>
                             @foreach($lavori as $lavoro)
                                 <tr>
-                                    <td><strong>{{ $lavoro->numero_ordine }}</strong></td>
+                                    <td><strong>{{ $lavoro->numero_progressivo }}</strong></td>
                                     <td>
                                         <strong>{{ $lavoro->nome_completo }}</strong>
                                         @if($lavoro->cliente_id)

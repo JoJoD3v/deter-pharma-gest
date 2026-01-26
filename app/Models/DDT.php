@@ -9,6 +9,7 @@ class DDT extends Model
     protected $table = 'd_d_t_s';
 
     protected $fillable = [
+        'numero_progressivo',
         'numero_ddt',
         'cliente_id',
         'codice_cliente',
@@ -43,11 +44,32 @@ class DDT extends Model
         parent::boot();
 
         static::creating(function ($ddt) {
+            // Se numero_progressivo non è impostato, usa il prossimo disponibile
+            if (empty($ddt->numero_progressivo)) {
+                $ddt->numero_progressivo = static::getNextProgressivo();
+            }
+            
+            // Genera numero_ddt se non impostato
             if (empty($ddt->numero_ddt)) {
-                $lastDdt = static::orderBy('id', 'desc')->first();
-                $nextNumber = $lastDdt ? intval(substr($lastDdt->numero_ddt, 3)) + 1 : 1;
-                $ddt->numero_ddt = 'DDT' . str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
+                $ddt->numero_ddt = 'DDT' . $ddt->numero_progressivo;
             }
         });
+    }
+
+    /**
+     * Ottiene il prossimo numero progressivo disponibile (inizia da 100)
+     */
+    public static function getNextProgressivo(): string
+    {
+        $lastDdt = static::orderBy('numero_progressivo', 'desc')->first();
+        
+        if ($lastDdt && $lastDdt->numero_progressivo) {
+            $lastNumber = intval($lastDdt->numero_progressivo);
+            $nextNumber = $lastNumber + 1;
+        } else {
+            $nextNumber = 100;
+        }
+        
+        return str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
     }
 }

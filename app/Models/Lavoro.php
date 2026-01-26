@@ -10,6 +10,7 @@ class Lavoro extends Model
     protected $table = 'lavori';
 
     protected $fillable = [
+        'numero_progressivo',
         'cliente_id',
         'nome_cliente',
         'cognome_cliente',
@@ -68,5 +69,37 @@ class Lavoro extends Model
     {
         $anno = $this->data_lavoro ? $this->data_lavoro->format('Y') : date('Y');
         return str_pad($this->id, 5, '0', STR_PAD_LEFT) . '/' . $anno;
+    }
+
+    /**
+     * Boot del modello
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($lavoro) {
+            // Se numero_progressivo non è impostato, usa il prossimo disponibile
+            if (empty($lavoro->numero_progressivo)) {
+                $lavoro->numero_progressivo = static::getNextProgressivo();
+            }
+        });
+    }
+
+    /**
+     * Ottiene il prossimo numero progressivo disponibile (inizia da 100)
+     */
+    public static function getNextProgressivo(): string
+    {
+        $lastLavoro = static::orderBy('numero_progressivo', 'desc')->first();
+        
+        if ($lastLavoro && $lastLavoro->numero_progressivo) {
+            $lastNumber = intval($lastLavoro->numero_progressivo);
+            $nextNumber = $lastNumber + 1;
+        } else {
+            $nextNumber = 100;
+        }
+        
+        return str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
     }
 }

@@ -78,7 +78,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Numero DDT</th>
+                                <th>Numero</th>
                                 <th>Cliente</th>
                                 <th>Data Trasporto</th>
                                 <th>Causale</th>
@@ -89,7 +89,7 @@
                         <tbody>
                             @foreach($ddts as $ddt)
                                 <tr>
-                                    <td><strong>{{ $ddt->numero_ddt }}</strong></td>
+                                    <td><strong>{{ $ddt->numero_progressivo }}</strong></td>
                                     <td>
                                         @if($ddt->cliente)
                                             {{ $ddt->cliente->nome_completo }}

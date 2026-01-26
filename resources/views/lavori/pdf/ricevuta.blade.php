@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ricevuta Lavoro - {{ $lavoro->numero_ordine }}</title>
+    <title>Ricevuta Lavoro - {{ $lavoro->numero_progressivo }}</title>
     <style>
         @page {
             margin: 15mm;
@@ -307,7 +307,7 @@
         <!-- ========== TITOLO DOCUMENTO ========== -->
         <div class="document-title">
             <h1>Ricevuta Lavoro</h1>
-            <div class="document-number">N° {{ $lavoro->numero_ordine }}</div>
+            <div class="document-number">N° {{ $lavoro->numero_progressivo }}</div>
         </div>
 
         <!-- ========== INFORMAZIONI ORDINE ========== -->
