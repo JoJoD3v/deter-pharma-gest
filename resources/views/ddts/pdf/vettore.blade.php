@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DDT {{ $ddt->numero_progressivo }} - Vettore</title>
+    <title>DDT {{ $ddt->numero_progressivo_formattato }} - Vettore</title>
     <style>
         * {
             margin: 0;
@@ -173,7 +173,7 @@
     <table class="info-box">
         <tr>
             <td class="label">NR.</td>
-            <td>{{ $ddt->numero_progressivo }}</td>
+            <td>{{ $ddt->numero_progressivo_formattato }}</td>
             <td class="label">DATA</td>
             <td>{{ $ddt->data_ora_trasporto ? $ddt->data_ora_trasporto->format('d/m/Y') : date('d/m/Y') }}</td>
             <td class="label">COD. CLIENTE</td>

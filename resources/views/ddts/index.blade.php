@@ -89,7 +89,7 @@
                         <tbody>
                             @foreach($ddts as $ddt)
                                 <tr>
-                                    <td><strong>{{ $ddt->numero_progressivo }}</strong></td>
+                                    <td><strong>{{ $ddt->numero_progressivo_formattato }}</strong></td>
                                     <td>
                                         @if($ddt->cliente)
                                             {{ $ddt->cliente->nome_completo }}

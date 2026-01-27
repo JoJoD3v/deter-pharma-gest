@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h2">Dettaglio DDT: {{ $ddt->numero_progressivo }}</h1>
+        <h1 class="h2">Dettaglio DDT: {{ $ddt->numero_progressivo_formattato }}</h1>
         <div class="btn-group" role="group">
             <a href="{{ route('ddts.pdf.amministratore', $ddt) }}" class="btn btn-danger" target="_blank">
                 <i class="bi bi-file-pdf"></i> PDF Amministratore

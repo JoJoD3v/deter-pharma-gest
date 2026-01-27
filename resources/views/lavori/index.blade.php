@@ -99,7 +99,7 @@
                         <tbody>
                             @foreach($lavori as $lavoro)
                                 <tr>
-                                    <td><strong>{{ $lavoro->numero_progressivo }}</strong></td>
+                                    <td><strong>{{ $lavoro->numero_progressivo_formattato }}</strong></td>
                                     <td>
                                         <strong>{{ $lavoro->nome_completo }}</strong>
                                         @if($lavoro->cliente_id)

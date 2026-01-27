@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h2">Dettaglio Lavoro N° {{ $lavoro->numero_progressivo }}</h1>
+        <h1 class="h2">Dettaglio Lavoro N° {{ $lavoro->numero_progressivo_formattato }}</h1>
         <div class="btn-group" role="group">
             <a href="{{ route('lavori.pdf.ricevuta', $lavoro) }}" class="btn btn-danger" target="_blank">
                 <i class="bi bi-file-pdf"></i> Scarica Ricevuta PDF
@@ -75,7 +75,7 @@
                     <table class="table table-borderless">
                         <tr>
                             <th width="40%">Numero Progressivo:</th>
-                            <td><strong class="text-primary">{{ $lavoro->numero_progressivo }}</strong></td>
+                            <td><strong class="text-primary">{{ $lavoro->numero_progressivo_formattato }}</strong></td>
                         </tr>
                         <tr>
                             <th>Data Lavoro:</th>

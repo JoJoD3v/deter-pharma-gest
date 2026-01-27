@@ -102,4 +102,16 @@ class Lavoro extends Model
         
         return str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
     }
+
+    /**
+     * Ottiene il numero progressivo formattato con l'anno (es: 000100/2025)
+     */
+    public function getNumeroProgressivoFormattatoAttribute(): string
+    {
+        if (!$this->numero_progressivo) {
+            return 'N/D';
+        }
+        $anno = $this->data_lavoro ? $this->data_lavoro->format('Y') : date('Y');
+        return $this->numero_progressivo . '/' . $anno;
+    }
 }
